@@ -1,12 +1,16 @@
-# Org MCP Server
+# Docker Container for Org‑MCP Server
 
-A Model Context Protocol (MCP) server for Emacs Org‑mode files, with configurable directory scanning and file filtering.
+A ready‑to‑run Docker container for the [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package, which implements a Model Context Protocol (MCP) server for Org‑mode files.
+
+This image provides configurable directory scanning and file filtering for the upstream org‑mcp server, making it easy to deploy without manual Emacs setup.
 
 ## Features
 
-- Scan multiple directories for `.org` files via the `ORG_FILES_DIRS` environment variable
-- Filter out unwanted files using an Emacs‑style regex via `ORG_FILE_IGNORE`
-- Expose the filtered list of Org files to MCP clients (e.g., Claude Desktop, Cursor)
+- **Zero‑configuration Emacs environment** – includes Emacs, org‑mcp, and all dependencies
+- **Configurable scanning** – specify directories via the `ORG_FILES_DIRS` environment variable
+- **Flexible filtering** – exclude files using an Emacs‑style regex via `ORG_FILE_IGNORE`
+- **Ready for MCP clients** – exposes the filtered Org files to Claude Desktop, Cursor, etc.
+- **Based on [org‑mcp](https://github.com/org-mcp/org-mcp)** – uses the upstream server implementation
 
 ## Quick Start
 
@@ -79,10 +83,14 @@ ORG_FILE_IGNORE='tmp/\|_backup\.org$'
 
 ## How It Works
 
-1. The server reads `ORG_FILES_DIRS` and collects all `.org` files recursively from each listed directory.
+This container runs the official [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package inside a pre‑configured environment:
+
+1. At startup, it reads `ORG_FILES_DIRS` and collects all `.org` files recursively from each listed directory.
 2. If `ORG_FILE_IGNORE` is set, any file whose full path matches the regex is removed from the list.
 3. The remaining files are exposed via the MCP tool `org-get-allowed-files`.
 4. Other MCP tools (e.g., `org-open-file`, `org-search-headings`) operate only on this allowed set.
+
+All MCP functionality is provided by the upstream org‑mcp package; this container merely packages it with sensible defaults and environment‑based configuration.
 
 ## Notes
 
@@ -91,6 +99,17 @@ ORG_FILE_IGNORE='tmp/\|_backup\.org$'
 - The regex follows Emacs’s `string-match-p` syntax. Use `\|` for alternation, `\.` for a literal dot, `$` for end‑of‑string.
 - The container must have the directories mounted at the same paths specified in `ORG_FILES_DIRS`.
 
+## Relationship to Upstream
+
+This Docker image is **not** a standalone MCP server. It is a containerized wrapper around the [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package, which does the actual MCP work. The image adds:
+
+- Automatic installation of Emacs and required packages
+- Environment‑variable based configuration
+- A pre‑configured entrypoint that starts the server
+- Easy volume mounting for your Org files
+
+If you need to modify MCP behavior or add new tools, please refer to the [org‑mcp repository](https://github.com/org-mcp/org-mcp).
+
 ## License
 
-MIT
+MIT – same as the upstream org‑mcp package.
