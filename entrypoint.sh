@@ -20,5 +20,11 @@ emacsclient -e "(require 'mcp-server-lib)"
 emacsclient -e "(org-mcp 1)"
 emacsclient -e "(mcp-server-lib-start)"
 
+# Check if emacs-mcp-stdio.sh exists
+if [ ! -x "/home/user/.emacs.d/emacs-mcp-stdio.sh" ]; then
+    echo "ERROR: /home/user/.emacs.d/emacs-mcp-stdio.sh not found or not executable"
+    exit 1
+fi
+
 # Run socat in the foreground
 exec socat TCP-LISTEN:3000,reuseaddr,fork,keepalive EXEC:"/home/user/.emacs.d/emacs-mcp-stdio.sh --init-function=org-mcp-enable --server-id=org-mcp"

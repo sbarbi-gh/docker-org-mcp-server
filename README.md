@@ -14,15 +14,30 @@ This image provides configurable directory scanning and file filtering for the u
 
 ## Quick Start
 
-### 1. Build the Docker image
+### 1. Pull the Docker image from GitHub Container Registry
 
 ```bash
-docker build -t org-mcp-server .
+docker pull ghcr.io/your-username/your-repo:latest
 ```
+
+Replace `your-username/your-repo` with your GitHub username and repository name.
 
 ### 2. Run the container
 
 ```bash
+docker run -d \
+  -p 3000:3000 \
+  -v /path/to/your/org/files:/home/user/org \
+  -e ORG_FILES_DIRS=/home/user/org \
+  -e ORG_FILE_IGNORE='README\|archive' \
+  --name org-mcp \
+  ghcr.io/your-username/your-repo:latest
+```
+
+### Alternatively, build locally
+
+```bash
+docker build -t org-mcp-server .
 docker run -d \
   -p 3000:3000 \
   -v /path/to/your/org/files:/home/user/org \
