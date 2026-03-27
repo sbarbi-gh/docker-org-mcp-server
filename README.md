@@ -1,6 +1,6 @@
 # Docker Container for Org‑MCP Server
 
-A ready‑to‑run Docker container for the [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package, which implements a Model Context Protocol (MCP) server for Org‑mode files.
+A ready‑to‑run Docker container for the [org‑mcp](https://github.com/laurynas-biveinis/org-mcp) Emacs package, which implements a Model Context Protocol (MCP) server for Org‑mode files.
 
 This image provides configurable directory scanning and file filtering for the upstream org‑mcp server, making it easy to deploy without manual Emacs setup.
 
@@ -10,7 +10,7 @@ This image provides configurable directory scanning and file filtering for the u
 - **Configurable scanning** – specify directories via the `ORG_FILES_DIRS` environment variable
 - **Flexible filtering** – exclude files using an Emacs‑style regex via `ORG_FILE_IGNORE`
 - **Ready for MCP clients** – exposes the filtered Org files to Claude Desktop, Cursor, etc.
-- **Based on [org‑mcp](https://github.com/org-mcp/org-mcp)** – uses the upstream server implementation
+- **Based on [org‑mcp](https://github.com/laurynas-biveinis/org-mcp)** – uses the upstream server implementation
 
 ## Quick Start
 
@@ -83,7 +83,7 @@ ORG_FILE_IGNORE='tmp/\|_backup\.org$'
 
 ## How It Works
 
-This container runs the official [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package inside a pre‑configured environment:
+This container runs the official [org‑mcp](https://github.com/laurynas-biveinis/org-mcp) Emacs package inside a pre‑configured environment:
 
 1. At startup, it reads `ORG_FILES_DIRS` and collects all `.org` files recursively from each listed directory.
 2. If `ORG_FILE_IGNORE` is set, any file whose full path matches the regex is removed from the list.
@@ -101,14 +101,14 @@ All MCP functionality is provided by the upstream org‑mcp package; this contai
 
 ## Relationship to Upstream
 
-This Docker image is **not** a standalone MCP server. It is a containerized wrapper around the [org‑mcp](https://github.com/org-mcp/org-mcp) Emacs package, which does the actual MCP work. The image adds:
+This Docker image is **not** a standalone MCP server. It is a containerized wrapper around the [org‑mcp](https://github.com/laurynas-biveinis/org-mcp) Emacs package, which does the actual MCP work. The image adds:
 
 - Automatic installation of Emacs and required packages
 - Environment‑variable based configuration
 - A pre‑configured entrypoint that starts the server
 - Easy volume mounting for your Org files
 
-If you need to modify MCP behavior or add new tools, please refer to the [org‑mcp repository](https://github.com/org-mcp/org-mcp).
+If you need to modify MCP behavior or add new tools, please refer to the [org‑mcp repository](https://github.com/laurynas-biveinis/org-mcp).
 
 ## License
 
