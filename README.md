@@ -35,9 +35,18 @@ docker run -d \
 ### 3. Test the connection
 
 ```bash
-echo '{"jsonrpc":"2.0","method":"tools/call", "params": {"name": "org-get-allowed-files", "arguments": {}}, "id":"req128"}' \
-  | nc -N localhost 3000 \
-  | jq .
+curl -s -X POST http://localhost:3000 \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"org-get-allowed-files","arguments":{}},"id":"req128"}'
+```
+
+For pretty‑printed output, pipe to `python3 -m json.tool` or `jq` if you have it:
+
+```bash
+curl -s -X POST http://localhost:3000 \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"org-get-allowed-files","arguments":{}},"id":"req128"}' \
+  | python3 -m json.tool
 ```
 
 ## Configuration
