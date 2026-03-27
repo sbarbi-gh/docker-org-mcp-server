@@ -35,3 +35,5 @@ COPY --chown=user:user entrypoint.sh /home/user/entrypoint.sh
 RUN chmod +x /home/user/entrypoint.sh
 
 ENTRYPOINT ["/home/user/entrypoint.sh"]
+
+ENTRYPOINT ["/home/user/entrypoint.sh"]
